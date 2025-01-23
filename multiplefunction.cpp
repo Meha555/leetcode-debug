@@ -3,50 +3,57 @@
 
 using namespace std;
 
-class MinStack {
+class MinStack
+{
 public:
     /** initialize your data structure here. */
-    stack<pair<int,int>> stk;
-    stack<pair<int,int>> minStk;
+    stack<pair<int, int>> stk;
+    stack<pair<int, int>> minStk;
     int id;
-    MinStack() {
+    MinStack()
+    {
         id = 0;
     }
-    
-    void push(int x) {
+
+    void push(int x)
+    {
         stk.push({id, x});
-        if(minStk.empty() || x<=minStk.top().second){
+        if (minStk.empty() || x <= minStk.top().second) {
             minStk.push({id, x});
         }
         id++;
     }
-    
-    void pop() {
+
+    void pop()
+    {
         auto [tid, tx] = stk.top();
         stk.pop();
-        if(!minStk.empty() && tid==minStk.top().first){
+        if (!minStk.empty() && tid == minStk.top().first) {
             minStk.pop();
         }
     }
-    
-    int top() {
+
+    int top()
+    {
         return stk.top().second;
     }
-    
-    int min() {
+
+    int min()
+    {
         return minStk.top().second;
     }
 };
 
-#define REGISTER(func) exc.registerMemberFunction(#func, &MinStack::func);
 
-int main() {
-// Excecutor的第一个模板参数为类名，第二个模板参数为false；
-  Excecutor<MinStack, false> exc("../multiplefunction.txt");
-  exc.instance = exc.createInstance<void>();
-  REGISTER(push)
-  REGISTER(pop)
-  REGISTER(top)
-  REGISTER(min)
-  exc.run();
+
+int main()
+{
+    // Excecutor的第一个模板参数为类名，第二个模板参数为false；
+    Excecutor<MinStack, false> exc("../multiplefunction.txt");
+    exc.instance = exc.createInstance<void>();
+    REGISTER(MinStack, push)
+    REGISTER(MinStack, pop)
+    REGISTER(MinStack, top)
+    REGISTER(MinStack, min)
+    exc.run();
 }
